@@ -1,0 +1,22 @@
+{
+  "name": "updg/roadrunner-easy",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alex Bond",
+      "email": "me@alexbond.info"
+    }
+  ],
+  "require": {
+    "spiral/roadrunner": "^1.3.3",
+    "psr/http-message": "^1.0"
+  },
+  "suggest": {
+    "updg/roadrunner-laravel": "To use Easy RoadRunner with Laravel/Lumen."
+  },
+  "autoload": {
+    "psr-4": {
+      "updg\\roadrunner\\easy\\": "src/"
+    }
+  }
+}
