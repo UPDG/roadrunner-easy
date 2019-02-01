@@ -25,7 +25,7 @@ class RoadRunner
      * Easy constructor.
      *
      * @param IntegrationInterface $integration Integration object.
-     * @param RelayInterface|null $relay Replay object. By default StreamRelay used.
+     * @param RelayInterface|null  $relay       Replay object. By default StreamRelay used.
      * @throws InvalidClientException
      */
     public function __construct(IntegrationInterface $integration, $relay = null)
@@ -73,7 +73,14 @@ class RoadRunner
 
             $this->_integration->beforeRequest();
 
-            $response = $this->_integration->processRequest($req);
+            switch ($this->_clientType) {
+                case HttpClient::class:
+                    $response = $this->_integration->processRequest($req['ctx'], $req['body']);
+                    break;
+                case PSR7Client::class:
+                    $response = $this->_integration->processRequest($req);
+                    break;
+            }
 
             $this->_integration->afterRequest();
 
