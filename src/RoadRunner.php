@@ -28,7 +28,7 @@ class RoadRunner
      * @param RelayInterface|null $relay Replay object. By default StreamRelay used.
      * @throws InvalidClientException
      */
-    public function __construct(IntegrationInterface $integration, $relay)
+    public function __construct(IntegrationInterface $integration, $relay = null)
     {
         if ($relay && $relay instanceof RelayInterface) {
             $this->_relay = $relay;
