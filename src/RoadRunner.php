@@ -67,9 +67,12 @@ class RoadRunner
         /** @var PSR7Client $client */
         $client = new $clientType(new \Spiral\RoadRunner\Worker($this->_relay));
 
-        // @todo Register termination listener
-
         while ($req = $client->acceptRequest()) {
+
+            if($req === null) {
+                $this->_integration->shutdown();
+                return;
+            }
 
             $this->_integration->beforeRequest();
 
