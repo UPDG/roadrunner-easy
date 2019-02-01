@@ -68,34 +68,37 @@ class RoadRunner
         $client = new $clientType(new \Spiral\RoadRunner\Worker($this->_relay));
 
         while ($req = $client->acceptRequest()) {
+            try {
+                if ($req === null) {
+                    $this->_integration->shutdown();
+                    return;
+                }
 
-            if($req === null) {
-                $this->_integration->shutdown();
-                return;
-            }
+                $this->_integration->beforeRequest();
 
-            $this->_integration->beforeRequest();
+                switch ($this->_clientType) {
+                    case HttpClient::class:
+                        $response = $this->_integration->processRequest($req['ctx'], $req['body']);
+                        break;
+                    case PSR7Client::class:
+                        $response = $this->_integration->processRequest($req);
+                        break;
+                }
 
-            switch ($this->_clientType) {
-                case HttpClient::class:
-                    $response = $this->_integration->processRequest($req['ctx'], $req['body']);
-                    break;
-                case PSR7Client::class:
-                    $response = $this->_integration->processRequest($req);
-                    break;
-            }
+                $this->_integration->afterRequest();
 
-            $this->_integration->afterRequest();
-
-            switch ($this->_clientType) {
-                case HttpClient::class:
-                    /** @var HttpClient $client */
-                    $client->respond($response['status'], $response['body'], $response['headers'] ?? []);
-                    break;
-                case PSR7Client::class:
-                    /** @var PSR7Client $client */
-                    $client->respond($response);
-                    break;
+                switch ($this->_clientType) {
+                    case HttpClient::class:
+                        /** @var HttpClient $client */
+                        $client->respond($response['status'], $response['body'], $response['headers'] ?? []);
+                        break;
+                    case PSR7Client::class:
+                        /** @var PSR7Client $client */
+                        $client->respond($response);
+                        break;
+                }
+            } catch (\Throwable $e) {
+                $client->getWorker()->error((string)$e);
             }
         }
     }
