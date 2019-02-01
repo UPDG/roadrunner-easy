@@ -11,5 +11,5 @@ interface HttpIntegrationInterface extends IntegrationInterface
      * @param string $body Body content
      * @return array
      */
-    public function processRequest(array $ctx, string $body): array;
+    public function processRequest(array $ctx, $body): array;
 }
