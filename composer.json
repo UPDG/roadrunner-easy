@@ -4,7 +4,8 @@
   "authors": [
     {
       "name": "Alex Bond",
-      "email": "me@alexbond.info"
+      "email": "me@alexbond.info",
+      "homepage": "https://updg.net"
     }
   ],
   "require": {
@@ -12,7 +13,8 @@
     "psr/http-message": "^1.0"
   },
   "suggest": {
-    "updg/roadrunner-laravel": "To use Easy RoadRunner with Laravel/Lumen."
+    "updg/roadrunner-laravel": "To use Easy RoadRunner with Laravel/Lumen.",
+    "updg/roadrunner-symfony": "To use Easy RoadRunner with Symfony."
   },
   "autoload": {
     "psr-4": {

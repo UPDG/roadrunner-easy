@@ -31,7 +31,7 @@ class RoadRunner
     public function __construct(IntegrationInterface $integration, $relay = null)
     {
         if ($relay && $relay instanceof RelayInterface) {
-            $this->_relay = $relay;
+            $this->_relay = &$relay;
         } else {
             $this->_relay = new \Spiral\Goridge\StreamRelay(STDIN, STDOUT);
         }
@@ -47,7 +47,7 @@ class RoadRunner
                 throw new InvalidClientException('Integration must implement HttpIntegrationInterface or PSR7IntegrationInterface.');
         }
 
-        $this->_integration = $integration;
+        $this->_integration = &$integration;
     }
 
     public function run()

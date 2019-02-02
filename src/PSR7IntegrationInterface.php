@@ -10,8 +10,8 @@ interface PSR7IntegrationInterface extends IntegrationInterface
     /**
      * Process request received from RoadRunner server
      *
-     * @param RequestInterface $request
-     * @return ResponseInterface
+     * @param RequestInterface $request PSR7 Request object
+     * @return ResponseInterface PSR7 Response object
      */
     public function processRequest(RequestInterface $request): ResponseInterface;
 }
