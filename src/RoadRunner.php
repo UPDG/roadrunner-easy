@@ -52,8 +52,9 @@ class RoadRunner
 
     public function run()
     {
-        if ($this->_running)
+        if ($this->_running) {
             return;
+        }
 
         $this->_integration->init();
 
